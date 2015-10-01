@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="60" tilewidth="32" tileheight="32" nextobjectid="13">
+ <tileset firstgid="1" name="test_tileset" tilewidth="32" tileheight="32">
+  <tile id="0">
+   <image width="32" height="32" source="black.png"/>
+  </tile>
+  <tile id="1">
+   <image width="32" height="32" source="white.png"/>
+  </tile>
+  <tile id="2">
+   <image width="32" height="32" source="blue.png"/>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="80" height="60">
+  <data encoding="base64" compression="zlib">
+   eJzt1zEOg0AQQ1EI979zUtIgLXwie6RfWJNuDPs2UfZt2z6/7M5Hs6HD5NnQYfI8fz7MUq7eZ7rXlFxZTPeaEv2x+Ft8f674S3dsnvr7v7/090pb7vpL922L/lj0x6I/Fv2x6I9Ffyz6Y9Efi/5Y9MdC/aX/s6fvBvWXfmfpu6G/Hn9N55/e/8Rf0/mn9+uP7dcf268/tl9/bL/+2H79sf36Y/v1x/brj+3XH9uvv/d66Y/10h/rpT/WS3+sl/5YL/2xXvpjvZr9tWaKv9boj0V/LPpj0R+L/lj0x6I/llV/b55T+pknPpd+Z5xTMmcjV/fauTYbOkyeDR2mzS+t+TBd
+  </data>
+ </layer>
+ <objectgroup name="Platform">
+  <object id="3" x="100" y="0" width="2451.52" height="96.9697"/>
+  <object id="4" x="2466.67" y="100" width="91.3333" height="1660.61"/>
+  <object id="5" x="0" y="1822.67" width="2556" height="95.5152"/>
+  <object id="6" x="1248.48" y="703.03" width="96.9697" height="736.364"/>
+  <object id="7" x="226" y="703.03" width="1022.48" height="93.9394"/>
+  <object id="8" x="224" y="796.97" width="97.2121" height="931.697"/>
+  <object id="9" x="94" y="222" width="2272.67" height="96.1818"/>
+  <object id="10" x="2270" y="321.212" width="96" height="860.606"/>
+  <object id="11" x="0" y="2" width="94" height="1760"/>
+  <object id="12" x="736" y="1728" width="96" height="95"/>
+ </objectgroup>
+</map>

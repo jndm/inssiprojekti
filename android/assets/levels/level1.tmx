@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="45" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <tile id="0">
+   <image width="32" height="32" source="images/background_inside.png"/>
+  </tile>
+  <tile id="1">
+   <image width="32" height="32" source="images/goal_inside1.png"/>
+  </tile>
+  <tile id="2">
+   <image width="32" height="32" source="images/goal_inside2.png"/>
+  </tile>
+  <tile id="3">
+   <image width="32" height="32" source="images/goal_inside3.png"/>
+  </tile>
+  <tile id="4">
+   <image width="32" height="32" source="images/goal_inside4.png"/>
+  </tile>
+  <tile id="5">
+   <image width="32" height="32" source="images/ground1.png"/>
+  </tile>
+  <tile id="6">
+   <image width="32" height="32" source="images/ground2.png"/>
+  </tile>
+  <tile id="7">
+   <image width="32" height="32" source="images/ground3.png"/>
+  </tile>
+  <tile id="8">
+   <image width="32" height="32" source="images/ground4.png"/>
+  </tile>
+  <tile id="9">
+   <image width="32" height="32" source="images/ground5.png"/>
+  </tile>
+  <tile id="10">
+   <image width="32" height="32" source="images/ground6.png"/>
+  </tile>
+  <tile id="11">
+   <image width="32" height="32" source="images/sky.png"/>
+  </tile>
+  <tile id="12">
+   <image width="32" height="32" source="images/smallspikes_inside.png"/>
+  </tile>
+  <tile id="13">
+   <image width="32" height="32" source="images/smallspikes_inside1.png"/>
+  </tile>
+  <tile id="14">
+   <image width="32" height="32" source="images/smallspikes_inside2.png"/>
+  </tile>
+  <tile id="15">
+   <image width="32" height="32" source="images/smallspikes_inside3.png"/>
+  </tile>
+  <tile id="16">
+   <image width="32" height="32" source="images/smallspikes_inside4.png"/>
+  </tile>
+  <tile id="17">
+   <image width="32" height="32" source="images/smallspikes_outside.png"/>
+  </tile>
+  <tile id="18">
+   <image width="32" height="32" source="images/smallspikes_outside2.png"/>
+  </tile>
+  <tile id="19">
+   <image width="32" height="32" source="images/smallspikes_outside3.png"/>
+  </tile>
+  <tile id="20">
+   <image width="32" height="32" source="images/smallspikes_outside4.png"/>
+  </tile>
+  <tile id="21">
+   <image width="32" height="32" source="images/tallspikes_inside.png"/>
+  </tile>
+  <tile id="22">
+   <image width="32" height="32" source="images/tallspikes_inside2.png"/>
+  </tile>
+  <tile id="23">
+   <image width="32" height="32" source="images/tallspikes_inside3.png"/>
+  </tile>
+  <tile id="24">
+   <image width="32" height="32" source="images/tallspikes_inside4.png"/>
+  </tile>
+  <tile id="25">
+   <image width="32" height="32" source="images/tallspikes_outside.png"/>
+  </tile>
+  <tile id="26">
+   <image width="32" height="32" source="images/tallspikes_outside2.png"/>
+  </tile>
+  <tile id="27">
+   <image width="32" height="32" source="images/tallspikes_outside3.png"/>
+  </tile>
+  <tile id="28">
+   <image width="32" height="32" source="images/tallspikes_outside4.png"/>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="60" height="45">
+  <data encoding="base64" compression="zlib">
+   eJzt1b0KgCAUhmH7X5waLKL7v87OKFKBRucYvcO7OXwPKHrnnFdorCQNK168ePHixYsXL168ePHixWsdXrx48eLFW0N432mXlqhGuVXZ6w2MePHmNCfdnd2kEPUF72SUldfqDynxtVL3I28vDSfenHtVi7f0XVjtf+q13oMXL168V4Uk6z1ERBod/Z9Pvw==
+  </data>
+ </layer>
+</map>
