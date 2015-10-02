@@ -1,26 +1,22 @@
 package com.jndm.game.resources;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.jndm.game.screens.Play;
+import com.jndm.game.utils.Constants;
 
 public class Player {
 	
-	private Play play;
 	private Body body;
-	
-	// Movement
-	private float defaultVelocity = 7f;
-	private Vector2 maxJumpVelocity = new Vector2(14f, 16f);
-	
+	private float delta;
+		
 	private boolean onGround = false;
 	private boolean onRightWall = false;
 	private boolean onLeftWall = false;
@@ -31,7 +27,7 @@ public class Player {
 	private boolean jumping = false;
 	private boolean adjustingJump = false;
 	private long jumpStartTime;
-	private final long JUMPDELAY = 100;
+	private final long JUMPDELAY = 400;
 	
 	//Testing, remove after
 	private Vector2 spawnpoint = new Vector2(3f, 4f);
@@ -95,12 +91,24 @@ public class Player {
 		movingRight = true; // set movement to right
 	}
 	
+	public void render(SpriteBatch sb) {
+		
+	}
+	
 	public void update(float delta) {
-		if(!jumping) {
-			move(delta);
+		this.delta = delta;
+		
+		if(!jumping && !adjustingJump) {
+			move();
+		} else if(adjustingJump) {
+			stop();
 		} else {
 			checkIfJumpIsDone(delta);
 		}
+	}
+
+	public void stop() {
+		body.setLinearVelocity(0f, 0f);
 	}
 
 	private void checkIfJumpIsDone(float delta) {
@@ -109,22 +117,16 @@ public class Player {
 		}
 	}
 
-	private void move(float delta) {	
-		Vector2 curSpeed = body.getLinearVelocity();
-		
-		// If player is adjusting jumping, stop movement
-		if(adjustingJump) {
-			body.setLinearVelocity(0f, 0f);
-			return;
-		}		
+	private void move() {	
+		Vector2 curSpeed = body.getLinearVelocity();	
 		
 		// If not jumping or adjusting jump, move normally
 		float maxVel = 0;
 		
 		if(movingRight) {
-			maxVel = defaultVelocity;
+			maxVel = Constants.DEFAULTVELOCITY;
 		} else if(movingLeft) {
-			maxVel = -defaultVelocity;
+			maxVel = -Constants.DEFAULTVELOCITY;
 		}
 	
 		// f = ma -> f = mv/t -> want to change speed instantly so ->  f = m * (max_v - current_v) / t	
@@ -132,7 +134,6 @@ public class Player {
 		float force = body.getMass() * velChange / delta;
 		
 		body.applyForceToCenter(new Vector2(force, 0), true);
-
 	}
 	
 	public void jump(Vector3 dragSp, Vector3 dragRp) {
@@ -145,27 +146,30 @@ public class Player {
 			turnRight();
 		}
 		
-		Vector2 impulse = normal.scl(5);	// Scale with 5 so no need to drag too far
+		Vector2 impulse = normal.scl(2);	// Scale with 5 so no need to drag too far
 		
 		// Clamp impulse x
-		if(impulse.x > maxJumpVelocity.x) {
-			impulse.x = maxJumpVelocity.x;	
-		} else if (impulse.x < -maxJumpVelocity.x) {
-			impulse.x = -maxJumpVelocity.x;
+		if(impulse.x > Constants.MAXJUMPVELOCITY.x) {
+			impulse.x = Constants.MAXJUMPVELOCITY.x;	
+		} else if (impulse.x < -Constants.MAXJUMPVELOCITY.x) {
+			impulse.x = -Constants.MAXJUMPVELOCITY.x;
 		}
 		
 		// Clamp impulse y
-		if(impulse.y > maxJumpVelocity.y) {
-			impulse.y = maxJumpVelocity.y;
-		} else if (impulse.y < -maxJumpVelocity.y) {
-			impulse.y = -maxJumpVelocity.y;
+		if(impulse.y > Constants.MAXJUMPVELOCITY.y) {
+			impulse.y = Constants.MAXJUMPVELOCITY.y;
+		} else if (impulse.y < -Constants.MAXJUMPVELOCITY.y) {
+			impulse.y = -Constants.MAXJUMPVELOCITY.y;
 		}
 	
 //		System.out.println("dragstart x: "+dragSp.x + " y: "+dragSp.y);
 //		System.out.println("dragrelease x: "+dragRp.x + " y: "+dragRp.y);
 //		System.out.println("angle: "+normal.angle()+" impulse x: "+impulse.x+ " impulse y: "+impulse.y);
-		body.setLinearVelocity(0f, 0f);
-		body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+		
+		float forcex = body.getMass() * impulse.x;	// Compensate mass - applying impulse so disregard time factor
+		float forcey = body.getMass() * impulse.y;
+		body.applyLinearImpulse(new Vector2(forcex, forcey), body.getWorldCenter(), true);
+		
 		jumping = true;
 		jumpStartTime = System.currentTimeMillis();
 	}
