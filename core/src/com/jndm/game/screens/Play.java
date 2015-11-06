@@ -1,6 +1,8 @@
 package com.jndm.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,6 +17,7 @@ import com.jndm.game.MyGame;
 import com.jndm.game.handlers.MyContactListener;
 import com.jndm.game.handlers.MyGestureListener;
 import com.jndm.game.resources.GameWorld;
+import com.jndm.game.resources.Hud;
 import com.jndm.game.resources.Player;
 import com.jndm.game.saving.Level;
 import com.jndm.game.utils.Constants;
@@ -26,51 +29,73 @@ public class Play implements Screen {
 	private World world;
 	private Level level;
 	private Player player;
-	private float gameRunningTime = 0;
+	private Hud hud;
+	private boolean levelFinished = false;
 	
 	private Vector3 dragStartPoint;
 	private boolean dragStartPointSet = false;
+	private Vector2 jumpImpulse;
 	private Array<Vector2> trajectoryPoints;
 
-	private final boolean DEBUG = true;
 	private BitmapFont font = new BitmapFont();
 	
-	public Play(MyGame game) {
+	public Play(MyGame game, Level level) {
 		this.game = game;
+		this.level = level;
 	}
 
 	@Override
 	public void show() {
-		
 		world = new World(new Vector2(0, -9.81f), true);
 		world.setContactListener(new MyContactListener());
 		
 		try {
-			gameWorld = new GameWorld(this, game, world, level);
+			gameWorld = new GameWorld(game, world, level);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 		
-		player = new Player(world);
-		Gdx.input.setInputProcessor(new GestureDetector(createGestureListener()));
+		player = new Player(game, world, this);
+		hud = new Hud(game, this);
+	
+		InputProcessor gameInputProcessor = new GestureDetector(createGestureListener());	
+		InputProcessor hudInputProcessor = hud.getStage();
+		Gdx.input.setInputProcessor(new InputMultiplexer(hudInputProcessor, gameInputProcessor));
 	}
 	
 	private MyGestureListener createGestureListener() {
 		return new MyGestureListener() {
 			@Override
 			public boolean tap(float x, float y, int pointer, int button) {
-				Vector3 touchpos = new Vector3(x, y, 0);
-				if(touchpos.x >= game.gameViewport.getScreenWidth() / 2) {
-					player.turnRight();
-				} else {
-					player.turnLeft();
+				if(!player.isOnGround() && (player.isOnLeftWall() || player.isOnRightWall())) {	//Use tapping wallsliding
+					Vector3 touchpos = new Vector3(x, y, 0);
+					System.out.println("tap");
+					if(touchpos.x >= game.gameViewport.getScreenWidth() / 2) {
+						player.turnRight();
+					} else {
+						player.turnLeft();
+					}
+				}
+				return true;
+			}
+			
+			@Override
+			public boolean touchDown(float x, float y, int pointer, int button) {
+				if(player.isOnGround() || (!player.isOnLeftWall() && !player.isOnRightWall())) {	// Use touchdown if not wallsliding
+					Vector3 touchpos = new Vector3(x, y, 0);
+					System.out.println("touchdown");
+					if(touchpos.x >= game.gameViewport.getScreenWidth() / 2) {
+						player.turnRight();
+					} else {
+						player.turnLeft();
+					}
 				}
 				return true;
 			}
 			
 			@Override
 			public boolean pan(float x, float y, float deltaX, float deltaY) {
-				if(!player.isJumping()) {	// If not already jumping start jump sequence
+				if(player.canJump()) {	// If not already jumping start jump sequence
 					if(!dragStartPointSet) {
 						dragStartPoint = new Vector3(x, y, 0);
 						game.cam.unproject(dragStartPoint);
@@ -79,7 +104,7 @@ public class Play implements Screen {
 					}
 					Vector3 currentDragPoint = new Vector3(x, y, 0);
 					game.cam.unproject(currentDragPoint);
-					calculateProjectileTrajectory(currentDragPoint);
+					calculateJumpImpulse(currentDragPoint);
 					player.setAdjustingJump(true);
 				}
 				return false;
@@ -90,7 +115,7 @@ public class Play implements Screen {
 				if(player.isAdjustingJump()) {
 					Vector3 dragReleasePoint = new Vector3(x, y, 0);
 					game.cam.unproject(dragReleasePoint);
-					player.jump(dragStartPoint, dragReleasePoint);
+					player.jump(jumpImpulse);
 					player.setAdjustingJump(false);
 					dragStartPointSet = false;
 				}
@@ -99,17 +124,37 @@ public class Play implements Screen {
 		};
 	}
 
-	protected void calculateProjectileTrajectory(Vector3 currentDragPoint) {
-		trajectoryPoints = new Array<Vector2>();
-		
+	protected void calculateJumpImpulse(Vector3 currentDragPoint) {
 		Vector2 normal = new Vector2(dragStartPoint.x - currentDragPoint.x, dragStartPoint.y - currentDragPoint.y);
 		Vector2 impulse = normal.scl(2f);	// Scale with 5 so no need to drag too far
 		
 		// Clamp impulse x
-		if(impulse.x > Constants.MAXJUMPVELOCITY.x) {
-			impulse.x = Constants.MAXJUMPVELOCITY.x;	
-		} else if (impulse.x < -Constants.MAXJUMPVELOCITY.x) {
-			impulse.x = -Constants.MAXJUMPVELOCITY.x;
+		if(!player.isOnGround() && player.isOnRightWall()) {	// If player is on wall
+			player.turnLeft();									// let player only jump on opposite direction
+			if(impulse.x > -0.5f) {								
+				impulse.x = -0.5f;
+			}  else if (impulse.x < -Constants.MAXJUMPVELOCITY.x) {
+				impulse.x = -Constants.MAXJUMPVELOCITY.x;
+			}
+		} else if(!player.isOnGround() && player.isOnLeftWall()) {
+			player.turnRight();
+			if(impulse.x < 0.5f) {
+				impulse.x = 0.5f;
+			} else if(impulse.x > Constants.MAXJUMPVELOCITY.x) {
+				impulse.x = Constants.MAXJUMPVELOCITY.x;	
+			}
+		} else {
+			if(normal.angle() > 90 && normal.angle() < 270) { 
+				player.turnLeft(); 
+			}  else { 
+				player.turnRight(); 
+			}
+			
+			if(impulse.x < -Constants.MAXJUMPVELOCITY.x) {		// If on ground
+				impulse.x = -Constants.MAXJUMPVELOCITY.x;		// let player jump where ever he wants
+			} else if(impulse.x > Constants.MAXJUMPVELOCITY.x) {
+				impulse.x = Constants.MAXJUMPVELOCITY.x;	
+			}
 		}
 		
 		// Clamp impulse y
@@ -118,7 +163,15 @@ public class Play implements Screen {
 		} else if (impulse.y < -Constants.MAXJUMPVELOCITY.y) {
 			impulse.y = -Constants.MAXJUMPVELOCITY.y;
 		}
-			
+		
+		calculateProjectileTrajectory(impulse);
+		jumpImpulse = impulse;
+		
+	}
+
+	protected void calculateProjectileTrajectory(Vector2 impulse) {
+		trajectoryPoints = new Array<Vector2>();	
+		
 		// fx(t) = x + vx * t
 		// fy(t) = y + vy * t + 1/2 * g * t^2
 		float time = 1/10f;
@@ -128,6 +181,7 @@ public class Play implements Screen {
 			trajectoryPoints.add(new Vector2(x, y));
 			time += 1/10f;
 		}
+		
 	}
 
 	@Override
@@ -136,34 +190,36 @@ public class Play implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		game.sb.setProjectionMatrix(game.gameViewport.getCamera().combined);
-		game.gameViewport.apply();
-		gameWorld.render();
-		
 		game.shapeRenderer.setProjectionMatrix(game.gameViewport.getCamera().combined);
-		game.shapeRenderer.setColor(Color.RED);
-
+		game.gameViewport.apply();
+		game.sb.setColor(Color.WHITE); // Stage doesn't clean up the SpriteBatch's color when it's done (stage is sharing the same sb)
+		
+		gameWorld.render();
+		player.render(delta);
+		
 		if(player.isAdjustingJump()) {
+			game.shapeRenderer.setColor(Color.RED);
 			game.shapeRenderer.begin(ShapeType.Filled);
 			for(Vector2 tp : trajectoryPoints) {
 				game.shapeRenderer.circle(tp.x, tp.y, 0.1f, 20);
-				System.out.println("x: " + tp.x + " y: " + tp.y);
 			}
 			game.shapeRenderer.end();
 		}
-		
 		
 		//Always draw hud
 		game.sb.setProjectionMatrix(game.hudCam.combined);
 		game.uiViewport.apply();
 		
-		if(DEBUG) {
+		hud.render();
+		
+		if(game.DEBUG) {
 			game.sb.begin();
-				font.draw(game.sb, "onGround: "+ (player.isOnGround() ? "true" : "false"), 10, game.uiViewport.getWorldHeight() * 0.95f);
-				font.draw(game.sb, "onRightWall: "+ (player.isOnRightWall() ? "true" : "false"), 10, game.uiViewport.getWorldHeight() * 0.91f);
-				font.draw(game.sb, "onLeftWall: "+ (player.isOnLeftWall() ? "true" : "false"), 10, game.uiViewport.getWorldHeight() * 0.87f);
-				font.draw(game.sb, "isJumping: "+ (player.isJumping() ? "true" : "false"), 10, game.uiViewport.getWorldHeight() * 0.83f);
-				font.draw(game.sb, "SpeedX: "+ player.getBody().getLinearVelocity().x + " SpeedY: "+ player.getBody().getLinearVelocity().y, 10, game.uiViewport.getWorldHeight() * 0.79f);
-				font.draw(game.sb, "x: "+ player.getBody().getPosition().x + " y: "+ player.getBody().getPosition().x, 10, game.uiViewport.getWorldHeight() * 0.75f);
+				font.draw(game.sb, "onGround: "+ (player.isOnGround() ? "true" : "false"), 10, game.uiViewport.getWorldHeight() * 0.92f);
+				font.draw(game.sb, "onRightWall: "+ (player.isOnRightWall() ? "true" : "false"), 10, game.uiViewport.getWorldHeight() * 0.88f);
+				font.draw(game.sb, "onLeftWall: "+ (player.isOnLeftWall() ? "true" : "false"), 10, game.uiViewport.getWorldHeight() * 0.84f);
+				font.draw(game.sb, "isJumping: "+ (player.isJumping() ? "true" : "false"), 10, game.uiViewport.getWorldHeight() * 0.80f);
+				font.draw(game.sb, "SpeedX: "+ player.getBody().getLinearVelocity().x + " SpeedY: "+ player.getBody().getLinearVelocity().y, 10, game.uiViewport.getWorldHeight() * 0.76f);
+				font.draw(game.sb, "x: "+ player.getBody().getPosition().x + " y: "+ player.getBody().getPosition().x, 10, game.uiViewport.getWorldHeight() * 0.72f);
 				font.draw(game.sb, "FPS: "+Gdx.graphics.getFramesPerSecond(), game.uiViewport.getWorldWidth() * 0.8f, game.uiViewport.getWorldHeight() * 0.95f);
 			game.sb.end();
 		}
@@ -172,12 +228,52 @@ public class Play implements Screen {
 	}
 	
 	private void update(float delta) {
-		gameRunningTime  += delta;	
-		player.update(delta);
-		world.step(1/60f, 8, 3);
-		updateCamera();
+		if(!player.hasWon() && !player.hasLost()) {
+			player.update(delta);
+			world.step(delta, 8, 3);
+			updateCamera();
+			hud.updateTimer(delta);
+		} else if(player.hasWon() && !levelFinished){
+			finishLevel();
+		} else if(player.hasLost() && !levelFinished) {
+			loseLevel();
+		}
 	}
 	
+	private void loseLevel() {
+		if(player.getBloodEffect().isComplete()) {
+			hud.showEndingStatusDialog(false);
+			levelFinished = true;
+		}
+	}
+
+	private void finishLevel() {
+		saveGame();
+		hud.showEndingStatusDialog(true);
+		levelFinished = true;
+	}
+
+	private void saveGame() {
+		boolean valueChanged = false;
+		if(level.getPb().equals("00:00.00") || hud.getTimeString().compareTo(level.getPb()) < 0) {
+			level.setPb(hud.getTimeString());
+			valueChanged = true;
+		}
+		
+		if(!level.isPassed()) {
+			level.setPassed(true);
+			if(level.getNumber() < 2) {	// for prototype number 5, otherwise Constant.MAXLEVEL
+				Level nextLevel = game.saveManager.loadDataValue("level"+(level.getNumber()+1), Level.class);
+				nextLevel.setAvailable(true);
+			}
+			valueChanged = true;
+		}
+		
+		if(valueChanged) {
+			game.saveManager.saveDataValue(level.getName(), level);
+		}
+	}
+
 	private void updateCamera() {
 		Vector2 playerpos = player.getBody().getPosition();
 		
@@ -208,6 +304,7 @@ public class Play implements Screen {
 	public void resize(int width, int height) {
 		game.gameViewport.update(width, height, true);
 		game.uiViewport.update(width, height, true);
+		updateCamera();
 	}
 
 	@Override
@@ -224,14 +321,27 @@ public class Play implements Screen {
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
+		dispose();
 	}
 
 	@Override
 	public void dispose() {
+		System.out.println("Disposed");
 		world.dispose();
 		gameWorld.dispose();
 		font.dispose();
+		hud.dispose();
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public Level getLevel() {
+		return level;
+	}
+	
+	public GameWorld getGameWorld() {
+		return gameWorld;
 	}
 }

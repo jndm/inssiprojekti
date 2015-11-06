@@ -2,12 +2,19 @@ package com.jndm.game.resources;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.jndm.game.MyGame;
+import com.jndm.game.saving.Level;
+import com.jndm.game.screens.LevelSelection;
 import com.jndm.game.screens.Play;
 import com.jndm.game.utils.Constants;
 import com.jndm.game.utils.Utils;
@@ -29,21 +36,15 @@ public class Hud {
 	public Hud(MyGame game, Play play) {
 		this.play = play;
 		this.game = game;
-		
-		//REMOVE AFTER THIS IS LOADED BEFORE COMING TO HUD
-		this.game.assetManager.load(Constants.UI_ATLAS_PATH, TextureAtlas.class);
-		this.game.assetManager.finishLoading();
-		
+			
 		atlas = game.assetManager.get(Constants.UI_ATLAS_PATH);
 		
 		stage = new Stage(game.uiViewport, game.sb);
 		
 		skin = new Skin();
-		skin.add("windowtitlefont", Utils.createFont(Constants.FONT_KENFACTOR_PATH, stage.getHeight() * 0.1f * 0.32f)); //Placeholder
-		skin.add("checkboxfont", Utils.createFont(Constants.FONT_KENFACTOR_PATH, stage.getHeight() * 0.1f * 0.32f)); //Placeholder
-		skin.add("timerfont", Utils.createFont(Constants.FONT_KENFACTOR_PATH, stage.getHeight() * 0.1f * 0.5f));
-		skin.add("optionstitlefont", Utils.createFont(Constants.FONT_KENFACTOR_PATH, stage.getHeight() * 0.1f * 0.8f));
-		skin.add("optionsbuttonfont", Utils.createFont(Constants.FONT_KENFACTOR_PATH, stage.getHeight() * 0.1f * 0.52f));
+		skin.add("timerfont", Utils.createFont(Constants.FONT_KENFACTOR_PATH, stage.getHeight() * 0.1f * 0.5f, Constants.DARK_BLUE));
+		skin.add("bigfont", Utils.createFont(Constants.FONT_KENFACTOR_PATH, stage.getHeight() * 0.1f * 0.55f, Constants.WHITE));
+		skin.add("normalfont", Utils.createFont(Constants.FONT_KENFACTOR_PATH, stage.getHeight() * 0.1f * 0.37f, Constants.WHITE));
 		skin.addRegions(atlas);
 		skin.load(Gdx.files.internal(Constants.HUD_SKIN_PATH));
 		
@@ -69,17 +70,8 @@ public class Hud {
 		stage.act(); 
 		stage.draw();
 	}
-	
-	public void update(float delta) {
-		updateTimer(delta);
-		checkIfPlayerWon();
-	}
 
-	private void checkIfPlayerWon() {
-		
-	}
-
-	private void updateTimer(float delta) {
+	public void updateTimer(float delta) {
 		gameTime += delta;
 	
 		int minutes = (int) (gameTime / 60);
@@ -108,18 +100,23 @@ public class Hud {
 	public Stage getStage() {
 		return stage;
 	}
-	
-/*
-	public void showEndingStatusDialog(boolean win) {
+
+	public void showEndingStatusDialog(boolean won) {
 		Dialog endStatusDialog = new Dialog("", skin, "options");
 		Table contentTable = endStatusDialog.getContentTable();
+		Table buttonTable = endStatusDialog.getButtonTable();
 		
-		Label text = new Label("You win!", skin, "label");
-		contentTable.add(new Label("Congratulations!\n", skin, "label"));
-		contentTable.row();
-		contentTable.add(new Label("Time: "+timeString, skin, "label")).left();
-		contentTable.row();
-		contentTable.add(new Label("Best time: "+play.getLevel().getPb(), skin, "label")).left();
+		if(won) {
+			contentTable.add(new Label("Congratulations!\n", skin, "finishtitle")).pad(0, 10, -20, 10);
+			contentTable.row();
+			contentTable.add(new Label("Time: "+timeString, skin, "finishtext")).left().padLeft(60);
+			contentTable.row();
+			contentTable.add(new Label("Best time: "+play.getLevel().getPb(), skin, "finishtext")).left().pad(0, 60, 15, 0);
+		} else {
+			contentTable.add(new Label("You are dead!\n", skin, "finishtitle")).pad(0, 10, -20, 10);
+			contentTable.row();
+			contentTable.add(new Label("Try again!", skin, "finishtext")).left().padLeft(10);
+		}
 		
 		TextButton restartButton = new TextButton("R", skin, "optionsbutton");
 		restartButton.addListener(new ClickListener() {
@@ -133,38 +130,40 @@ public class Hud {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new LevelSelection(game, Constants.BLUE_UI_ATLAS));
+				game.setScreen(new LevelSelection(game));
 			}
 		});
 		
 		TextButton nextButton = new TextButton(">>", skin, "optionsbutton");
-		nextButton.addListener(new ClickListener() {
+		final Level nextLevel = (Level) game.saveManager.loadDataValue("level"+ (play.getLevel().getNumber()+1), Level.class);
+		nextButton.addListener(new ChangeListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new Play(game, play.getLevel()));
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new Play(game, nextLevel));
 			}
 		});
 		
-		Table t = new Table();
-		t.add(returnButton)
-		.width(stage.getWidth() * 0.1f)
-		.height(stage.getHeight() * 0.1f);
+		if(!nextLevel.isAvailable()) {		// Disable button if lost level and next level not yet available
+			nextButton.setDisabled(true);
+		}
+		
+		//Table buttonTable = new Table();
+		buttonTable.add(returnButton)
+			.width(stage.getWidth() * 0.1f)
+			.height(stage.getHeight() * 0.1f);
 	
-		t.add(restartButton)
+		buttonTable.add(restartButton)
 			.width(stage.getWidth() * 0.1f)
 			.height(stage.getHeight() * 0.1f)
 			.pad(0, stage.getWidth() * 0.01f, 0, stage.getWidth() * 0.01f);
 	
-		t.add(nextButton)
+		buttonTable.add(nextButton)
 			.width(stage.getWidth() * 0.1f)
 			.height(stage.getHeight() * 0.1f);
 		
-		endStatusDialog.row();
-		endStatusDialog.add(t);
-		endStatusDialog.debug();
 		endStatusDialog.show(stage);
 	}
-	
+	/*	
 	private Button createOptionsButton() {
 		Button optionsButton = new Button(skin, "optionsbutton");
 		optionsButton.addListener(new ClickListener() {

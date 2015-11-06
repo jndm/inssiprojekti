@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="60" tilewidth="32" tileheight="32" nextobjectid="19">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="60" tilewidth="32" tileheight="32" nextobjectid="20">
  <tileset firstgid="1" name="test_tileset" tilewidth="32" tileheight="32">
+  <terraintypes>
+   <terrain name="New Terrain" tile="-1"/>
+  </terraintypes>
   <tile id="0">
    <image width="32" height="32" source="black.png"/>
   </tile>
@@ -15,6 +18,12 @@
   </tile>
   <tile id="4">
    <image width="32" height="32" source="orange.png"/>
+  </tile>
+  <tile id="5">
+   <image width="32" height="32" source="../images/spikeLeft.png"/>
+  </tile>
+  <tile id="6">
+   <image width="32" height="32" source="../images/spikeRight.png"/>
   </tile>
  </tileset>
  <layer name="Tile Layer 1" width="80" height="60">
@@ -38,6 +47,16 @@
   <object id="15" name="Goal" x="1248" y="641.333" width="62.6667" height="58.6667"/>
   <object id="18" name="Spawnpoint" x="863.417" y="666.292" width="32" height="32">
    <ellipse/>
+  </object>
+ </objectgroup>
+ <layer name="Tile Layer 2" width="80" height="60">
+  <data encoding="base64" compression="zlib">
+   eJztxbENAAAEAEEV+2/MCAqdu+TzEQAAAAAAAAAAAAAAAAAAAAAAcCOnWhz4rQFVnwBC
+  </data>
+ </layer>
+ <objectgroup name="Spike">
+  <object id="19" x="1696" y="1823">
+   <polyline points="0,0 10,-31 310,-30 320,0 321,1 0,1"/>
   </object>
  </objectgroup>
 </map>

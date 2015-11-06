@@ -1,7 +1,9 @@
 {
 	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
 		"timerlabel":		{ "font": timerfont }
-		"optionstitle":		{ "font": optionstitlefont }
+		"optionstitle":		{ "font": bigfont }
+		"finishtitle":		{ "font": bigfont }
+		"finishtext":		{ "font": normalfont }
 	},
 	
 	"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
@@ -9,14 +11,14 @@
 	},
 	
 	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
-		"optionsbutton": { "up": "button.up", "down": "button.down", "pressedOffsetY": -2, 	"font": optionsbuttonfont }
+		"optionsbutton": { "up": "button.up", "down": "button.down", "pressedOffsetY": -2, 	"font": bigfont }
 	},
 	
 	"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
-		"options":	{ "background": panel, "titleFont": windowtitlefont }
+		"options":	{ "background": panel, "titleFont": bigfont }
 	},
 	
 	"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
-		"default": { "checkboxOff": checkbox.off, "checkboxOn": checkbox.on, "font": checkboxfont }
+		"default": { "checkboxOff": checkbox.off, "checkboxOn": checkbox.on, "font": normalfont }
 	}
 }

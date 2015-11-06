@@ -1,0 +1,295 @@
+
+ui_pack.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1, 1
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+blue_button00
+  rotate: false
+  xy: 1027, 976
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+blue_button04
+  rotate: false
+  xy: 1027, 925
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+blue_button13
+  rotate: false
+  xy: 1027, 874
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+button.up
+  rotate: false
+  xy: 1027, 823
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+blue_button01
+  rotate: false
+  xy: 1027, 776
+  size: 190, 45
+  orig: 190, 45
+  offset: 0, 0
+  index: -1
+blue_button05
+  rotate: false
+  xy: 1027, 729
+  size: 190, 45
+  orig: 190, 45
+  offset: 0, 0
+  index: -1
+button.down
+  rotate: false
+  xy: 1027, 682
+  size: 190, 45
+  orig: 190, 45
+  offset: 0, 0
+  index: -1
+dropdownBottom
+  rotate: false
+  xy: 1027, 656
+  size: 190, 24
+  orig: 190, 24
+  offset: 0, 0
+  index: -1
+dropdownMid
+  rotate: false
+  xy: 1027, 630
+  size: 190, 24
+  orig: 190, 24
+  offset: 0, 0
+  index: -1
+dropdownTop
+  rotate: false
+  xy: 1027, 604
+  size: 190, 24
+  orig: 190, 24
+  offset: 0, 0
+  index: -1
+panel
+  rotate: false
+  xy: 1027, 502
+  size: 100, 100
+  split: 4, 4, 4, 4
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+blue_button06
+  rotate: false
+  xy: 1027, 451
+  size: 49, 49
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+blue_button07
+  rotate: false
+  xy: 1129, 553
+  size: 49, 49
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+blue_button11
+  rotate: false
+  xy: 1027, 400
+  size: 49, 49
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+levelbutton.disabled
+  rotate: false
+  xy: 1078, 451
+  size: 49, 49
+  split: 4, 4, 4, 8
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+levelbutton.up
+  rotate: false
+  xy: 1129, 502
+  size: 49, 49
+  split: 6, 6, 3, 8
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+blue_button08
+  rotate: false
+  xy: 1027, 353
+  size: 49, 45
+  orig: 49, 45
+  offset: 0, 0
+  index: -1
+blue_button12
+  rotate: false
+  xy: 1078, 404
+  size: 49, 45
+  orig: 49, 45
+  offset: 0, 0
+  index: -1
+levelbutton.down
+  rotate: false
+  xy: 1129, 455
+  size: 49, 45
+  split: 3, 3, 3, 4
+  orig: 49, 45
+  offset: 0, 0
+  index: -1
+circlebutton.down
+  rotate: false
+  xy: 1027, 311
+  size: 40, 40
+  split: 0, 0, 0, 0
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+circlebutton.up
+  rotate: false
+  xy: 1078, 362
+  size: 40, 40
+  split: 0, 0, 0, 0
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+optionsbutton.up
+  rotate: false
+  xy: 1180, 563
+  size: 36, 39
+  orig: 36, 39
+  offset: 0, 0
+  index: -1
+blue_boxCheckmark
+  rotate: false
+  xy: 1129, 417
+  size: 38, 36
+  orig: 38, 36
+  offset: 0, 0
+  index: -1
+blue_boxCross
+  rotate: false
+  xy: 1027, 273
+  size: 38, 36
+  orig: 38, 36
+  offset: 0, 0
+  index: -1
+blue_circle
+  rotate: false
+  xy: 1180, 525
+  size: 36, 36
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+checkbox.off
+  rotate: false
+  xy: 1027, 235
+  size: 36, 36
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+checkbox.on
+  rotate: false
+  xy: 1180, 487
+  size: 36, 36
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+optionsbutton.down
+  rotate: false
+  xy: 1027, 197
+  size: 36, 36
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+blue_sliderDown
+  rotate: false
+  xy: 1027, 153
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: -1
+blue_sliderUp
+  rotate: false
+  xy: 1027, 109
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: -1
+arrow.left.down
+  rotate: false
+  xy: 1180, 454
+  size: 39, 31
+  split: 0, 0, 0, 0
+  orig: 39, 31
+  offset: 0, 0
+  index: -1
+arrow.left.up
+  rotate: false
+  xy: 1027, 76
+  size: 39, 31
+  split: 0, 0, 0, 0
+  orig: 39, 31
+  offset: 0, 0
+  index: -1
+arrow.right.down
+  rotate: false
+  xy: 1027, 43
+  size: 39, 31
+  split: 0, 0, 0, 31
+  orig: 39, 31
+  offset: 0, 0
+  index: -1
+arrow.right.up
+  rotate: false
+  xy: 1027, 10
+  size: 39, 31
+  split: 0, 0, 0, 31
+  orig: 39, 31
+  offset: 0, 0
+  index: -1
+blue_sliderLeft
+  rotate: false
+  xy: 1169, 421
+  size: 39, 31
+  orig: 39, 31
+  offset: 0, 0
+  index: -1
+blue_sliderRight
+  rotate: false
+  xy: 1129, 384
+  size: 39, 31
+  orig: 39, 31
+  offset: 0, 0
+  index: -1
+blue_checkmark
+  rotate: false
+  xy: 1170, 399
+  size: 21, 20
+  orig: 21, 20
+  offset: 0, 0
+  index: -1
+blue_cross
+  rotate: false
+  xy: 1193, 401
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+blue_tick
+  rotate: false
+  xy: 1170, 380
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1

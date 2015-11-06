@@ -2,6 +2,7 @@ package com.jndm.game.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -49,11 +50,12 @@ public class Utils {
 	 * @param  size fontsize
 	 * @return BitmapFont
 	 */
-	public static BitmapFont createFont(String file, float size) {
+	public static BitmapFont createFont(String file, float size, Color color) {
 		FileHandle fontFile = Gdx.files.internal(file);
 	    FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 	    
-	    FreeTypeFontParameter parameter = new FreeTypeFontParameter();    
+	    FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+	    parameter.color = color;
 	    parameter.size = (int)Math.ceil(size);
 	    
 	    parameter.minFilter = TextureFilter.Nearest;

@@ -36,7 +36,7 @@
  </objectgroup>
  <objectgroup name="Points">
   <object id="15" name="Goal" x="1248" y="641.333" width="62.6667" height="58.6667"/>
-  <object id="18" name="Spawnpoint" x="863.417" y="666.292" width="32" height="32">
+  <object id="18" name="Spawnpoint" x="863.417" y="574.292" width="32" height="32">
    <ellipse/>
   </object>
  </objectgroup>

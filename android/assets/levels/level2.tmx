@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="32" tileheight="32" nextobjectid="60">
+ <tileset firstgid="1" name="platform" tilewidth="32" tileheight="32">
+  <tile id="0">
+   <image width="32" height="32" source="platforms/grassLeft.png"/>
+  </tile>
+  <tile id="1">
+   <image width="32" height="32" source="platforms/grassMid.png"/>
+  </tile>
+  <tile id="2">
+   <image width="32" height="32" source="platforms/grassRight.png"/>
+  </tile>
+  <tile id="3">
+   <image width="32" height="32" source="platforms/ground.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="5" name="Objects" tilewidth="32" tileheight="32">
+  <tile id="0">
+   <image width="32" height="32" source="objects/goal1.png"/>
+  </tile>
+  <tile id="1">
+   <image width="32" height="32" source="objects/goal2.png"/>
+  </tile>
+  <tile id="2">
+   <image width="32" height="32" source="objects/spikeLeft.png"/>
+  </tile>
+  <tile id="3">
+   <image width="32" height="32" source="objects/spikeRight.png"/>
+  </tile>
+  <tile id="4">
+   <image width="32" height="32" source="objects/spikeBottom_left.png"/>
+  </tile>
+  <tile id="5">
+   <image width="32" height="32" source="objects/spikeBottom_right.png"/>
+  </tile>
+  <tile id="6">
+   <image width="32" height="32" source="objects/spikeTop_left.png"/>
+  </tile>
+  <tile id="7">
+   <image width="32" height="32" source="objects/spikeTop_right.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="13" name="background" tilewidth="32" tileheight="32">
+  <image source="backgrounds/blue_shroom.png" width="1024" height="1024"/>
+ </tileset>
+ <layer name="Background" width="60" height="40">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="60" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmEsKgDAMRIuI4Of+53XhJoQS2jS1SZiBWUgw9kE6VUvp1/6TvQi84AUveCPyRuqtFXht9EzsPaJZa7om9h4R5vnTpnBr75WS1jR65oB3vcBbr4FX5o1w/t5CrZc3wvl7CjXMcy5evv+y8/L9l52X11os5Z0XWeazlHdehHyu17LzIp9z8/JaRl7L92d+vxchn+u1FtP5iPA9SKXJZzofEb4HqSzyOZrAu5b3YNeaf+SSe3mtn2+9Phj27BcZCA3t
+  </data>
+ </layer>
+ <objectgroup name="Platform">
+  <object id="36" x="480.667" y="192.667" width="32" height="896"/>
+  <object id="37" x="447" y="1056.67" width="33" height="32"/>
+  <object id="38" x="416" y="0" width="32" height="1088"/>
+  <object id="39" x="0" y="1152" width="640" height="32"/>
+  <object id="40" x="640" y="385.667" width="32" height="799"/>
+  <object id="41" x="992" y="385.667" width="32" height="797.667"/>
+  <object id="42" x="607.333" y="352.667" width="416.667" height="32"/>
+  <object id="43" x="1024.5" y="1152" width="894.833" height="32"/>
+  <object id="44" x="1151.83" y="192.25" width="32" height="863.75"/>
+  <object id="45" x="1216.08" y="-0.666667" width="32" height="1056.67"/>
+  <object id="46" x="480" y="159.333" width="703.333" height="32"/>
+  <object id="49" x="1183.67" y="1024" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Points">
+  <object id="50" name="Spawnpoint" x="45.8333" y="1117.33" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="51" name="Goal" x="1792" y="1121" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Spike">
+  <object id="31" x="1151.67" y="255.667">
+   <polygon points="0,0 -31.6667,10.3333 -31.3333,53.6667 -0.333333,64.3333"/>
+  </object>
+  <object id="32" x="1151.67" y="512">
+   <polygon points="0,0 -31.6667,10.3333 -31.3333,53 0.333333,64.3333"/>
+  </object>
+  <object id="33" x="1024" y="704">
+   <polygon points="0,0 30.3333,10 30.3333,54 -0.333333,64.3333"/>
+  </object>
+  <object id="34" x="1152" y="993.333">
+   <polygon points="0,0 -32,9 -32,51.6667 -0.333333,63"/>
+  </object>
+  <object id="35" x="1024" y="992">
+   <polygon points="0,0 30.3333,10 29.6667,52.3333 -0.333333,64.3333"/>
+  </object>
+  <object id="53" x="513.5" y="928.5">
+   <polygon points="0,0 28.5,10 28.5,53.5 0,62.5"/>
+  </object>
+  <object id="54" x="639.5" y="832">
+   <polygon points="0,0 -31.5,10 -31.5,53 0,65"/>
+  </object>
+  <object id="55" x="640" y="1024.5">
+   <polygon points="0,0 -32,10 -31.5,52 0,65"/>
+  </object>
+  <object id="56" x="640" y="638.333">
+   <polygon points="0,0 -31.5,10 -31.5,53 0,65"/>
+  </object>
+  <object id="58" x="513.667" y="736.667">
+   <polygon points="0,0 28.5,10 28.5,53.5 0,62.5"/>
+  </object>
+  <object id="59" x="513" y="545">
+   <polygon points="0,0 28.5,10 28.5,53.5 0,62.5"/>
+  </object>
+ </objectgroup>
+</map>
