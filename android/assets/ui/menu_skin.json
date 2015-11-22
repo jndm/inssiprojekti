@@ -1,0 +1,32 @@
+{
+	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+		"label":	{ "font": font }
+		"levelButtonSmallFont": { "font": levelbuttonsmallfont }
+		"title":	{ "font": titlefont } 
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+		"arrowright": 	 { "up": "arrow.right.up", 	"down": "arrow.right.down"  }
+		"arrowleft": 	 { "up": "arrow.left.up", 	"down": "arrow.left.down"   }
+		"optionsbutton": { "up": "circlebutton.up", "down": "circlebutton.down" }
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+		"levelbutton": 	{ "up": "levelbutton.up", 	"down": "levelbutton.down", "disabled": "levelbutton.disabled", "pressedOffsetY": -2, "font": levelbuttonfont }
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+		"playbutton": 		 { "up": "circlebutton.up", 	"down": "circlebutton.down", 	"imageUp": "play.icon",				"imageDown": "play.icon",			"pressedOffsetY": -2 }
+		"achievementbutton": { "up": "circlebutton.up", 	"down": "circlebutton.down", 	"imageUp": "achievements.icon",		"imageDown": "achievements.icon",	"pressedOffsetY": -2 }
+		"leaderboardbutton": { "up": "circlebutton.up", 	"down": "circlebutton.down", 	"imageUp": "leaderboard.icon",		"imageDown": "leaderboard.icon",	"pressedOffsetY": -2 }
+		"exitbutton": 		 { "up": "circlebutton.up", 	"down": "circlebutton.down", 	"imageUp": "exit.icon",				"imageDown": "exit.icon",	"pressedOffsetY": -2 }
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+		"default":	{ "background": panel, "titleFont": font }
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+		"default": { "checkboxOff": checkbox.off, "checkboxOn": checkbox.on, "font": font }
+	}
+}

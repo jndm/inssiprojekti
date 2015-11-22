@@ -1,5 +1,6 @@
 package com.jndm.game.utils;
 
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -29,7 +30,21 @@ public class Box2DMapObjectParserHelper extends Box2DMapObjectParser{
 			map.getLayers().get("Spike").getProperties().put("categoryBits", Constants.PLATFORM_CATEGORY);
 			map.getLayers().get("Spike").getProperties().put("userData", Constants.BOX2D_SPIKE_USERDATA);
 			map.getLayers().get("Spike").getProperties().put("maskBits", Constants.SPIKE_MASK);
-		} 
+		}
+		
+		//Set moving platform's box2D data
+		if(map.getLayers().get("MovingPlatform") != null && map.getLayers().get("MovingPlatform").getObjects().getCount() != 0) {
+			int i = 0;
+			for(MapObject mo : map.getLayers().get("MovingPlatform").getObjects()) {
+				mo.setName("mplatform"+i);
+				mo.getProperties().put("type", Constants.BOX2D_OBJECT);
+				mo.getProperties().put("bodyType", Constants.BOX2D_KINEMATIC_BODY_TYPE);
+				mo.getProperties().put("userData", Constants.BOX2D_PLATFORM_USERDATA);
+				mo.getProperties().put("categoryBits", Constants.PLATFORM_CATEGORY);
+				mo.getProperties().put("maskBits", Constants.PLATFORM_MASK);
+				i++;
+			}
+		}
 		
 		//Check if spawnpoint exists
 		if(map.getLayers().get("Points") == null || map.getLayers().get("Points").getObjects().get("Spawnpoint") == null) {

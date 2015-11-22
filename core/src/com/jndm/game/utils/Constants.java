@@ -25,6 +25,8 @@ public class Constants {
 	
 	//BOX2D
 	public static final String BOX2D_OBJECT = "object";
+	public static final String BOX2D_KINEMATIC_BODY_TYPE = "KinematicBody";
+	
 	public static final String BOX2D_GOAL_USERDATA = "GOAL";
 	public static final String BOX2D_PLATFORM_USERDATA = "PLATFORM";
 	public static final String BOX2D_SPIKE_USERDATA = "SPIKE";

@@ -1,4 +1,4 @@
-package com.jndm.game.resources;
+package com.jndm.game.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.jndm.game.MyGame;
 import com.jndm.game.saving.Level;
-import com.jndm.game.screens.LevelSelection;
+import com.jndm.game.screens.Menu;
 import com.jndm.game.screens.Play;
 import com.jndm.game.utils.Constants;
 import com.jndm.game.utils.Utils;
@@ -130,7 +130,7 @@ public class Hud {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new LevelSelection(game));
+				game.setScreen(new Menu(game));
 			}
 		});
 		

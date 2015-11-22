@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jndm.game.saving.Level;
 import com.jndm.game.saving.SaveManager;
-import com.jndm.game.screens.MainMenu;
+import com.jndm.game.screens.Menu;
 import com.jndm.game.utils.Constants;
 
 public class MyGame extends Game {
@@ -39,11 +39,11 @@ public class MyGame extends Game {
 		uiViewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), hudCam);
 		
 		saveManager = new SaveManager();
-		if(saveManager.getAllData().size == 0) {	 // if first time launching the game generate level data
+		/*if(saveManager.getAllData().size == 0) {	 // if first time launching the game generate level data
 			generateLevelData();
-		}
+		}*/
 		
-		this.setScreen(new MainMenu(this));
+		this.setScreen(new Menu(this));
 	}
 	
 	private void generateLevelData() {

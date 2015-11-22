@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="30" tilewidth="32" tileheight="32" nextobjectid="30">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="30" tilewidth="32" tileheight="32" nextobjectid="49">
  <tileset firstgid="1" name="platform" tilewidth="32" tileheight="32">
   <tile id="0">
    <image width="32" height="32" source="platforms/grassLeft.png"/>
@@ -31,6 +31,11 @@
  <tileset firstgid="9" name="background" tilewidth="32" tileheight="32">
   <image source="backgrounds/blue_shroom.png" width="1024" height="1024"/>
  </tileset>
+ <tileset firstgid="1033" name="movingPlatform" tilewidth="32" tileheight="32">
+  <tile id="0">
+   <image width="32" height="32" source="platforms/grassMid.png"/>
+  </tile>
+ </tileset>
  <layer name="Background" width="80" height="30">
   <data encoding="base64" compression="zlib">
    eJzd1lOXHgYUhtFJJmls27Zt27Zt27Zt27aTNixitUGbtEERq/tvzLfW2bfvc3siBAUFRSQSkYlCVKIRnRjEJBaxiUNc4hGfBCQkEYlJQlKSkZwUpCQVqUlDWtKRngghvJ+BjGQiM1nISjayk4Oc5CI3echLPvJTgIIUojBFKEoxilOCkpSiNGUoSznKB0C/AhWpRGWqUJVqVKcGNalFbepQl3rUpwENaURjmtCUZjSnBS1pRWva0JZ2tA+Afgc60onOdKEr3ehOD3rSi970oS/96M8ABjKIwQxhKMMYzghGMorRjGEs4xgfAP0JTGQSk5nCVKYxnRnMZBazmcNc5jGfBSxkEYtZwlKWsZwVrGQVq1nDWtaxPgD6G9jIJjazha1sYzs72MkudrOHvexjPwc4yCEOc4SjHOM4JzjJKU5zhrOc43wA9C/wPT9wkUtc5gpXucaP/MTP/MJ1bnCTW9zmDne5x30e8JBf+Y1HPOYJT/mdPwKg/4zn/MlfvOAlr3jN3/zDv/zHG97yjvd84COf+MwXvvKNoFCO0AQThrB8RzjChwr5/Qg2IhKJyEQhKtGITgxiEovYxCEu8YhPAhKSiMQkISnJSE4KUpKK1KQhLelIHyrk9zOQkUxkJgtZyUZ2cpCTXOQmD3nJR34KUJBCFKYIRSlGcUpQklKUpgxlKUf5AOhXoCKVqEwVqlKN6tSgJrWoTR3qUo/6NKAhjWhME5rSjOa0oCWtaE0b2tKO9gHQ70BHOtGZLnSlG93pQU960Zs+9KUf/RnAQAYxmCEMZRjDGcFIRjGaMYxlHOMDoD+BiUxiMlOYyjSmM4OZzGI2c5jLPOazgIUsYjFLWMoylrOClaxiNWtYyzrWB0B/AxvZxGa2sJVtbGcHO9nFbvawl33s5wAHOcRhjnCUYxznBCc5xWnOcJZznA+A/gW+5wcuconLXOEq1/iRn/iZX7jODW5yi9vc4S73uM8DHvIrv/GIxzzhKb/zRwD0n/GcP/mLF7zkFa/5m3/4l/94w1ve8Z4PfOQTn/nCV74RFNr/RWiCCUNYviMc4UOH/H4EGxGJRGSiEJVoRCcGMYlFbOIQl3jEJwEJSURikpCUZCQnBSlJRWrSkJZ0pA8d8vsZyEgmMpOFrGQjOznISS5yk4e85CM/BShIIQpThKIUozglKEkpSlOGspSjfAD0K1CRSlSmClWpRnVqUJNa1KYOdalHfRrQkEY0pglNaUZzWtCSVrSmDW1pR/sA6HegI53oTBe60o3u9KAnvehNH/rSj/4MYCCDGMwQhjKM4YxgJKMYzRjGMo7xAdCfwEQmMZkpTGUa05nBTGYxmznMZR7zWcBCFrGYJSxlGctZwUpWsZo1rGUd6wOgv4GNbGIzW9jKNrazg53sYjd72Ms+9nOAgxziMEc4yjGOc4KTnOI0ZzjLOc4HQP8C3/MDF7nEZa5wlWv8yE/8zC9c5wY3ucVt7nCXe9znAQ/5ld94xGOe8JTf+SMA+s94zp/8xQte8orX/M0//Mt/vOEt73jPBz7yic984SvfCAr2fxGaYMIQlu8IR/jgkN+PYCMikYhMFKISjejEICaxiE0c4hKP+CQgIYlITBKSkozkpCAlqUhNGtKSjvTBIb+fgYxkIjNZyEo2spODnOQiN3nISz7yU4CCFKIwRShKMYpTgpKUojRlKEs5ygdAvwIVqURlqlCValSnBjWpRW3qUJd61KcBDWlEY5rQlGY0pwUtaUVr2tCWdrQPgH4HOtKJznShK93oTg960ove9KEv/ejPAAYyiMEMYSjDGM4IRjKK0YxhLOMYHwD9CUxkEpOZwlSmMZ0ZzGQWs5nDXOYxnwUsZBGLWcJSlrGcFaxkFatZw1rWsT4A+hvYyCY2s4WtbGM7O9jJLnazh73sYz8HOMghDnOEoxzjOCc4ySlOc4aznON8APT/B9oajEM=
@@ -38,34 +43,38 @@
  </layer>
  <layer name="Tile Layer 1" width="80" height="30">
   <data encoding="base64" compression="zlib">
-   eJzt1EEKgDAMRNEoit7/xLpUETEQyQz+B6HdlQxJIwAAAAAAAAAAAN5Z9lpvTpyNxfU3U3FdOWab2bWv81NWsW9d+SnMZXXvjvOnNDsK+WXnsrtftfyyuvt1zG8+3Lv7dchvCK8/TC2/eHhvA1w8Bjk=
+   eJzt1DEKgDAMQNEoit7/xOrWxUlIGnkPAh3DJzQCAAAAAAAAmNlxz1m9RANrwvzZljCz+3Ib+uU00E+/0T68q/t06LdE7R/Wvd/jbb8LRqUD0g==
   </data>
  </layer>
  <objectgroup name="Platform">
-  <object id="4" x="1792" y="672" width="96" height="31.6667"/>
-  <object id="5" x="1983.67" y="736" width="95.8333" height="31.5"/>
-  <object id="6" x="2176" y="800.333" width="95.6667" height="31.3333"/>
   <object id="7" x="2336" y="896.333" width="223.333" height="31"/>
   <object id="8" x="2368" y="928.333" width="191" height="30.6667"/>
   <object id="9" x="0" y="801" width="479.5" height="31"/>
   <object id="10" x="480" y="768" width="32" height="64"/>
-  <object id="12" x="480" y="736" width="543.75" height="31.9091"/>
-  <object id="16" x="1024" y="640" width="640" height="32"/>
-  <object id="21" x="1024" y="672" width="32" height="96"/>
-  <object id="23" x="1632" y="672" width="32" height="286"/>
+  <object id="12" x="480" y="736" width="799.636" height="31.9091"/>
+  <object id="34" x="1247.55" y="768.091" width="32" height="191.545"/>
  </objectgroup>
  <objectgroup name="Points">
-  <object id="25" name="Spawnpoint" x="32" y="767" width="32" height="32">
+  <object id="25" name="Spawnpoint" x="1054.67" y="696.333" width="32" height="32">
    <ellipse/>
   </object>
   <object id="26" name="Goal" x="2463.5" y="864.5" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Spike">
-  <object id="1" x="1215.5" y="639.5">
-   <polygon points="0,0 10,-31.5 183.5,-31 192,-0.5"/>
-  </object>
   <object id="2" x="672" y="736">
    <polygon points="0,0 10.5,-31 54,-31.5 63,-0.5"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="MovingPlatform">
+  <object id="35" x="1527.33" y="736.333" width="160" height="32">
+   <properties>
+    <property name="maxX" value="70"/>
+    <property name="maxY" value="99999"/>
+    <property name="minX" value="41"/>
+    <property name="minY" value="0"/>
+    <property name="speedX" value="-3"/>
+    <property name="speedY" value="0"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

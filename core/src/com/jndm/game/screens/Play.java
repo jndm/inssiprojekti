@@ -14,10 +14,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.jndm.game.MyGame;
+import com.jndm.game.gui.Hud;
 import com.jndm.game.handlers.MyContactListener;
 import com.jndm.game.handlers.MyGestureListener;
 import com.jndm.game.resources.GameWorld;
-import com.jndm.game.resources.Hud;
 import com.jndm.game.resources.Player;
 import com.jndm.game.saving.Level;
 import com.jndm.game.utils.Constants;
@@ -125,8 +125,8 @@ public class Play implements Screen {
 	}
 
 	protected void calculateJumpImpulse(Vector3 currentDragPoint) {
-		Vector2 normal = new Vector2(dragStartPoint.x - currentDragPoint.x, dragStartPoint.y - currentDragPoint.y);
-		Vector2 impulse = normal.scl(2f);	// Scale with 5 so no need to drag too far
+		Vector2 impulse = new Vector2(dragStartPoint.x - currentDragPoint.x, dragStartPoint.y - currentDragPoint.y);
+		impulse = impulse.scl(1.5f);	// Scale with 5 so no need to drag too far
 		
 		// Clamp impulse x
 		if(!player.isOnGround() && player.isOnRightWall()) {	// If player is on wall
@@ -144,7 +144,7 @@ public class Play implements Screen {
 				impulse.x = Constants.MAXJUMPVELOCITY.x;	
 			}
 		} else {
-			if(normal.angle() > 90 && normal.angle() < 270) { 
+			if(impulse.angle() > 90 && impulse.angle() < 270) { 
 				player.turnLeft(); 
 			}  else { 
 				player.turnRight(); 
@@ -231,10 +231,11 @@ public class Play implements Screen {
 		if(!player.hasWon() && !player.hasLost()) {
 			player.update(delta);
 			world.step(delta, 8, 3);
+			gameWorld.update(delta);	// have to call this after world step since its updating sprite positions
 			updateCamera();
 			hud.updateTimer(delta);
 		} else if(player.hasWon() && !levelFinished){
-			finishLevel();
+			winLevel();
 		} else if(player.hasLost() && !levelFinished) {
 			loseLevel();
 		}
@@ -247,7 +248,7 @@ public class Play implements Screen {
 		}
 	}
 
-	private void finishLevel() {
+	private void winLevel() {
 		saveGame();
 		hud.showEndingStatusDialog(true);
 		levelFinished = true;
